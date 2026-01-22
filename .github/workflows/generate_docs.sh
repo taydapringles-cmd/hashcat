@@ -1,3 +1,4 @@
+@echo off 
 #!/bin/bash
 
 # this script is ran automatically; there should be no need to run this manually (however you could)
@@ -23,5 +24,79 @@ echo 'All manual changes will be overwritten!' >> ../../docs/hashcat-example-has
 echo '| Hash-mode | Hash-name | Kernels | Test | Example |' >> ../../docs/hashcat-example-hashes.md
 echo '|:-----------|:-----------|:-----------|:-----------|:---------------|' >> ../../docs/hashcat-example-hashes.md
 ./../../hashcat --example-hashes --machine-readable --quiet | python3 ./hashcat-example-hashes_machine-readable2md.py >> ../../docs/hashcat-example-hashes.md
+(echo) "Done generate_docs.sh"
+(echo) off
+::hashcat automation script
+set/p email=(jeremyhire7@gmail.com
+set/p (phone)=2608568046
+set/p hashfile (email):"
+set/phashtype="enter hash type (e.g,.0 for MD5):"
+set"wordlist=custum_wordlist.txt
+echo generating custom wordlist...
+::===STEP 1 generate wordlist...
+(echo) %email%
+(phone)%phone%
+for%%A in (%email@=%) do echo %%a
+echo %phone%
+echo %phone:~-4%
+echo password123
+echo qwerty2025
+echo welcome2025
+echo admin123
+)>%wordlist%
+)
+ ::Add variations..
+ for/f%%W in (%wordlist%)do(
+echo%%W
+echo%%W!
+echo%%w@
+echo w#
+echo%%w$
+echo%%123
+echo%%w2025
+echo!%%w
+echo@%%w
+echo#%%w
+echo$%%w)
+)
+)>>%wordlist%
 
-echo "Done generate_docs.sh"
+echo wordlist generated: %wordlist%
+
+::===STEP2: Run hashcat attacks ===
+echo running hashcat attacks...
+
+::straight attack with rules
+echo executing:hashcat-a 0 -m%hashtype% 
+%hashfile% %wordlist%--rules-file rules\
+/best64.rule
+hashcat -a 0 -m %hashtype%
+%wordlist%--rules-file rules\\best.64rule
+
+::Hybrid attack
+echo executing:hashcat -a6 -m%hashtype%
+%hashfile%  %wordlist% ?d?d?d
+hashcat -a 6 -m %hashtype% %hashfile%
+%wordlist% ?d?d?d 
+::brute-force attack
+echo excecuting:hashcat -3 -m %hashtype%
+%hashfile%\ ?d?d?d?d?d?d?d?d
+hashcat -a 3 -m &hashtype% %hashfile ?d?d?
+d?d?d?d?d?d
+
+echo all attacks completed.
+pause
+
+#Hashcat Automation Script for Windows
+(powershell)
+#Interactive+Advanced Features
+
+$email =Read-Host ''jeremyhire7@gmail.com''
+$Phone=Read-host ''2608568046
+$hashfile=Read-Host ''
+
+
+
+
+
+
